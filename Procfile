@@ -1,0 +1,1 @@
+worker: python gli77ybot.py

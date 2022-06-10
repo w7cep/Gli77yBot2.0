@@ -5,9 +5,16 @@ from nextcord.ext import commands
 import aiosqlite
 import config
 import asyncio
+from pathlib import Path
 
+cwd = Path(__file__).parents[0]
+cwd = str(cwd)
+print("~~~~~~~~~~~\n\n")
+print(f"Current Working Directory:\n{cwd}\n")
 
-async def getprefix(client, message):
+async def getprefix(bot, message):
+    if not message.guild:
+        return commands.when_mentioned_or(bot.DEFAULTPREFIX)(bot, message)
     async with aiosqlite.connect("main.db") as db:
         async with db.cursor() as cursor:
             await cursor.execute("SELECT prefix FROM prefixes WHERE guild = ?", (message.guild.id,))
@@ -22,9 +29,9 @@ def main():
     intents = nextcord.Intents.all()
     intents.guilds = True
     intents.members = True
-    
+
     activity = nextcord.Activity(
-        type=nextcord.ActivityType.listening, name=f"!help"
+        type=nextcord.ActivityType.listening, name="!help"
     )
 
     bot = commands.Bot(

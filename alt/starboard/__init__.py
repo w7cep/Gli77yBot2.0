@@ -33,13 +33,14 @@ class Starboard(commands.Cog, name="Starboard"):
                                     embed.set_image(url=message.attachments[0].url)
                                 except:
                                     pass
-                                    embed.set_author(name="message Link", url=message.jump_url, icon_url=message.author.avatar.url)
+                                    embed.set_author(name="Message Link", url=message.jump_url, icon_url=message.author.avatar.url)
                                     embed.set_footer(text=f"Message ID: {message.id} | Author: {message.author.name}")
                                 await channelData.send(embed=embed)
     
     
     
     @commands.group()
+    @commands.has_permissions(manage_guild=True)
     async def setup(self, ctx):
         if ctx.invoked_subcommand is None:
             return await ctx.send("That subcommand does not exist!")

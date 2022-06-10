@@ -164,6 +164,7 @@ class LevelingCog(commands.Cog, name="Leveling"):
             return await ctx.send("there are no users stored in the leaderboard")
         
     @commands.group()
+    @commands.has_permissions(manage_guild=True)
     async def slvl(self, ctx):
         return
     
